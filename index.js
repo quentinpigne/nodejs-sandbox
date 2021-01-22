@@ -5,6 +5,15 @@ const bodyParser = require("body-parser");
 const app = express();
 const port = 3000;
 
+const morgan = require("morgan");
+const winston = require("winston");
+const logger = winston.createLogger({
+  transports: [
+    new winston.transports.Console()
+  ]
+})
+
+app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }))
 
@@ -17,5 +26,5 @@ app.post('/', (req, res) => {
 })
 
 app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`);
+  logger.info(`Example app listening at http://localhost:${port}`);
 })
