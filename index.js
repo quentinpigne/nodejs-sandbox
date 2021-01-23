@@ -13,6 +13,9 @@ const logger = winston.createLogger({
   ]
 })
 
+const mongoose = require("mongoose");
+mongoose.connect('mongodb://mongo:27017/nodejs-sandbox', { useNewUrlParser: true, useUnifiedTopology: true });
+
 app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }))
