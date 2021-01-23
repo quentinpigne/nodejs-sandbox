@@ -1,33 +1,17 @@
 'use strict';
-const express = require("express");
-const bodyParser = require("body-parser");
+const async = require("async");
+const logger = require("./config/initializers/logger");
 
-const app = express();
-const port = 3000;
+logger.info('[APP] Starting server initialization');
 
-const morgan = require("morgan");
-const winston = require("winston");
-const logger = winston.createLogger({
-  transports: [
-    new winston.transports.Console()
-  ]
-})
-
-const mongoose = require("mongoose");
-mongoose.connect('mongodb://mongo:27017/nodejs-sandbox', { useNewUrlParser: true, useUnifiedTopology: true });
-
-app.use(morgan('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }))
-
-app.get('/', (req, res) => {
-  res.send('Hello World!');
-})
-
-app.post('/', (req, res) => {
-  res.send(req.body);
-})
-
-app.listen(port, () => {
-  logger.info(`Example app listening at http://localhost:${port}`);
+// Initialize Modules
+async.series([
+  callback => require("./config/initializers/mongo")(callback),
+  callback => require("./config/initializers/server")(callback)
+], error => {
+  if (error) {
+    logger.error('[APP] Initialization failed', error);
+  } else {
+    logger.info('[APP] Initialized successfully');
+  }
 })
