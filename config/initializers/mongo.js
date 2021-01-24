@@ -1,7 +1,8 @@
 'use strict';
-const mongoose = require("mongoose");
-const logger = require("winston");
 const nconf = require("nconf");
+const mongoose = require("mongoose");
+
+const logger = require("../../lib/logger");
 
 module.exports = function(callback) {
   const config = nconf.get("mongo");

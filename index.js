@@ -1,7 +1,6 @@
 'use strict';
 const nconf = require("nconf");
 const async = require("async");
-const logger = require("./config/initializers/logger");
 
 // Load Environment variables from .env file
 require('dotenv').config();
@@ -15,6 +14,7 @@ nconf.env();
 // Load config file for the environment
 nconf.file(`./config/environments/${nconf.get('NODE_ENV')}.json`);
 
+const logger = require("./lib/logger");
 logger.info('[APP] Starting server initialization');
 
 // Initialize Modules

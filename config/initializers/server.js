@@ -1,9 +1,10 @@
 'use strict';
+const nconf = require("nconf");
 const express = require("express");
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
-const logger = require("winston");
-const nconf = require("nconf");
+
+const logger = require("../../lib/logger");
 
 module.exports = function(callback) {
   const app = express();
