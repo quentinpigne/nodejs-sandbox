@@ -3,10 +3,11 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
 const logger = require("winston");
+const nconf = require("nconf");
 
 module.exports = function(callback) {
   const app = express();
-  const port = 3000;
+  const port = nconf.get("NODE_PORT");
 
   app.use(morgan('dev'));
   app.use(bodyParser.json());

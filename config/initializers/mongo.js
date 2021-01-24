@@ -1,14 +1,16 @@
 'use strict';
 const mongoose = require("mongoose");
 const logger = require("winston");
+const nconf = require("nconf");
 
 module.exports = function(callback) {
-  const mongoConfig = {
+  const config = nconf.get("mongo");
+  const mongooseConfig = {
     useNewUrlParser: true,
     useUnifiedTopology: true
   };
 
-  mongoose.connect('mongodb://mongo:27017/nodejs-sandbox', mongoConfig, error => {
+  mongoose.connect(`mongodb://${config.host}:${config.port}/${config.database}`, mongooseConfig, error => {
     if (error) {
       callback(true);
     } else {
