@@ -1,8 +1,10 @@
 'use strict';
 const nconf = require("nconf");
 const express = require("express");
-const bodyParser = require("body-parser");
+
+const cors = require("cors");
 const morgan = require("morgan");
+const bodyParser = require("body-parser");
 
 const logger = require("../../lib/logger");
 
@@ -10,6 +12,7 @@ module.exports = function(callback) {
   const app = express();
   const port = nconf.get("NODE_PORT");
 
+  app.use(cors());
   app.use(morgan('dev'));
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: true }))
