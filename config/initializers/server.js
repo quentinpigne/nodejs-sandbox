@@ -17,13 +17,7 @@ module.exports = function(callback) {
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: true }))
 
-  app.get('/', (req, res) => {
-    res.send('Hello World!');
-  })
-
-  app.post('/', (req, res) => {
-    res.send(req.body);
-  })
+  require("../../app/routes/test")(app);
 
   app.listen(port, () => {
     logger.info(`[SERVER] Listening on port ${port}`);
