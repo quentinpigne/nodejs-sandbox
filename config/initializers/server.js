@@ -17,7 +17,7 @@ module.exports = function(callback) {
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: true }))
 
-  require("../../app/routes/test")(app);
+  app.use(nconf.get("api:prefix"), require("../../app/routes")());
 
   app.listen(port, () => {
     logger.info(`[SERVER] Listening on port ${port}`);

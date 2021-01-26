@@ -1,10 +1,16 @@
 'use strict';
-module.exports = app => {
-  app.get('/', (req, res) => {
-    res.send('Hello World!');
-  })
+const { Router } = require("express");
 
-  app.post('/', (req, res) => {
-    res.send(req.body);
-  })
+module.exports = () => {
+  const router = Router();
+
+  router.route('/')
+    .get((req, res) => {
+      res.send('Hello World!');
+    })
+    .post((req, res) => {
+      res.send(req.body);
+    });
+
+  return router;
 }
