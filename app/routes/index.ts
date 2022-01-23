@@ -5,7 +5,7 @@ import test from './test';
 
 const routes: { [key: string]: () => Router } = {
   test,
-}
+};
 
 export default () => {
   const router: Router = Router();
@@ -17,4 +17,4 @@ export default () => {
   });
 
   return router;
-}
+};

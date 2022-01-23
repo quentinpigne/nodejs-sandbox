@@ -13,16 +13,16 @@ interface Error {
   status: number;
 }
 
-export default function(callback: (err?: Error | null) => void) {
+export default function (callback: (err?: Error | null) => void) {
   const app: express.Application = express();
-  const port: number = nconf.get("NODE_PORT");
+  const port: number = nconf.get('NODE_PORT');
 
   app.use(cors());
   app.use(morgan('dev'));
   app.use(bodyParser.json());
-  app.use(bodyParser.urlencoded({ extended: true }))
+  app.use(bodyParser.urlencoded({ extended: true }));
 
-  app.use(nconf.get("api:prefix"), routes());
+  app.use(nconf.get('api:prefix'), routes());
 
   // Catch 404 and forward to error handler
   app.use((req: Request, res: Response, next: NextFunction) => {
@@ -35,29 +35,28 @@ export default function(callback: (err?: Error | null) => void) {
      * Handle 401 thrown by express-jwt library
      */
     if (err.name === 'UnauthorizedError') {
-      return res
-        .status(err.status)
-        .send({ message: err.message })
-        .end();
+      return res.status(err.status).send({ message: err.message }).end();
     }
     return next(err);
   });
 
-  app.use(function(err: Error, req: Request, res: Response, next: NextFunction) {
+  app.use(function (err: Error, req: Request, res: Response, next: NextFunction) {
     res.status(err.status || 500);
     res.json({
       message: err.message,
-      error: (app.get('env') === 'development' ? err : {})
+      error: app.get('env') === 'development' ? err : {},
     });
   });
 
-  app.listen(port, () => {
-    logger.info(`[SERVER] Listening on port ${port}`);
-    callback();
-  }).on('error', function (error: Error & { code: string }) {
-    if(error.code === 'EADDRINUSE') {
+  app
+    .listen(port, () => {
+      logger.info(`[SERVER] Listening on port ${port}`);
+      callback();
+    })
+    .on('error', function (error: Error & { code: string }) {
+      if (error.code === 'EADDRINUSE') {
         logger.error(`[SERVER] Port ${port} is busy`);
-    }
-    callback(error);
-  });
+      }
+      callback(error);
+    });
 }

@@ -3,7 +3,8 @@ import { Request, Response, Router } from 'express';
 export default () => {
   const router: Router = Router();
 
-  router.route('/')
+  router
+    .route('/')
     .get((req: Request, res: Response) => {
       res.send('Hello World!');
     })
@@ -12,4 +13,4 @@ export default () => {
     });
 
   return router;
-}
+};

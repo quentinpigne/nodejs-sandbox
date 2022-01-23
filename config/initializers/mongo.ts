@@ -9,8 +9,8 @@ type MongoConfig = {
   database: string;
 };
 
-export default function(callback: (error?: Error | null) => void) {
-  const config: MongoConfig = nconf.get("mongo");
+export default function (callback: (error?: Error | null) => void) {
+  const config: MongoConfig = nconf.get('mongo');
   const mongooseConfig: mongoose.ConnectOptions = {};
 
   mongoose.connect(
@@ -24,6 +24,6 @@ export default function(callback: (error?: Error | null) => void) {
         logger.info('[MONGO] MongoDB successfully initialized');
         callback();
       }
-    }
+    },
   );
 }

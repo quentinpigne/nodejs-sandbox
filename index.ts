@@ -21,13 +21,16 @@ nconf.file(`./config/environments/${nconf.get('NODE_ENV')}.json`);
 logger.info('[APP] Starting server initialization');
 
 // Initialize Modules
-async.series([
-  (callback: (error?: Error | null) => void) => initMongo(callback),
-  (callback: (error?: Error | null) => void) => initServer(callback),
-], (error?: Error | null) => {
-  if (error) {
-    logger.error('[APP] Initialization failed');
-  } else {
-    logger.info('[APP] Initialized successfully');
-  }
-});
+async.series(
+  [
+    (callback: (error?: Error | null) => void) => initMongo(callback),
+    (callback: (error?: Error | null) => void) => initServer(callback),
+  ],
+  (error?: Error | null) => {
+    if (error) {
+      logger.error('[APP] Initialization failed');
+    } else {
+      logger.info('[APP] Initialized successfully');
+    }
+  },
+);
